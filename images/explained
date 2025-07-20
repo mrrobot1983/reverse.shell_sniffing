@@ -1,1 +1,3 @@
+Each screenshot shows the process of a basic reverse shell sniff. Using wireshark capture, I kept track of the payload going through the 3-way handshake, from host machine (kali linux) to victim/ vulnerable machine (Metasploitable).
 
+IMG_0946.jpg--->
