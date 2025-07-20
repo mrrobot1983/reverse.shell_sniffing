@@ -1,5 +1,6 @@
 If you want to participate in this exercise, you must install a Kali Linux machine and Metasploitable (as the victim device). I personally use OracleVMware to interact with my virtualized lab environments.
-
+(Optional) I used wireshark to view the payload interact, overseeing the 3-way handshake through my network traffic analysis. Ensure to capture Wireshark before continuing this exercise, to see how the whole thing plays out.
+	Bash command: $ sudo wireshark---> choose interface you are currently using for reverse shell sniffing, then capture before starting.
 
 Basic Reverse Shell Sniffing (with Wireshark Traffic Analysis)
 
