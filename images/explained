@@ -1,3 +1,12 @@
 Each screenshot shows the process of a basic reverse shell sniff. Using wireshark capture, I kept track of the payload going through the 3-way handshake, from host machine (kali linux) to victim/ vulnerable machine (Metasploitable).
 
-IMG_0946.jpg--->
+IMG_0947.jpg---> Displays Step 1 in setting up msfvenom using your Kali IP and shell.elf text file as the payload. The screenshot also shows Step 2: making shell.elf payload executable using the chmod command. Last command shows python3 hosting your payload. REMINDER: this is a simple payload, not malicious (but rather as an empty text file to practice reverse shells).
+
+IMG_0946.jpg---> nc -lvnp command is a setup listener, ensures payload has been received by Metasploitable.
+
+IMG_0950.jpg---> Wireshark traffic analysis using tcp.port==4444 filter. You can also use ip.dst==<Kali IP>. Screenshot shows that wireshark has captured both host and vicitm IPs and TCP (top is victim IP, middle is host IP).
+
+IMG_0949---> Opening up the tcp stream on either IP (victim or host), it shows Metasploitable being succesfully connected to host machine. On the other hand, kali host machine is still running the python3 server, ensuring that the payload is able to go through.
+
+IMG_0948---> Using the tcp.stream eq 1 filter, it shows successful 3-way handshake between both machines. [SYN]-->[SYN, ACK]-->[ACK]
+Initial SYN shown on step 1 and 2, and ACK shown at the end of step 3.
